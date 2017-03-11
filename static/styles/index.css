@@ -13,11 +13,12 @@
 }
 
 .cartoonImage {
-  min-height: 50%;
-  min-width: 40%;
+  min-height: 60%;
+  min-width: 30%;
   position: absolute;
-  left: 30%;
+  left: 35%;
   top: 10%;
+  display: none;
 }
 
 .prev, .next{
