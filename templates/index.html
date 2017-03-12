@@ -2,10 +2,15 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{{url_for('static', filename='scripts/index.js')}}"></script>
 </head>
+
+<title>
+    New Yorker Caption Generation
+</title>
 
 <body>
 {% for c in contests %}
@@ -13,6 +18,14 @@
         <img class="cartoonImage" src="http://clair.si.umich.edu/~radev/humor/NYKR_CaptionContest/{{ c.image }}" alt={{ c.image }} width="120" height="90" />
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
         <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <br>
+        <form action="{{ url_for('index') }}" method="post" class="keyword-form form-inline">
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_0" placeholder="insert keyword 1">
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_1" placeholder="insert keyword 2">
+            <button type="submit" class="btn btn-primary">Update Keywords</button>
+        </form>
+            <br>
+            <button type="submit" class="gen-btn btn btn-primary">Generate Captions</button>
     </div>
 {% endfor %}
 

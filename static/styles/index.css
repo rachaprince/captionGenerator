@@ -1,7 +1,7 @@
 /* Adapted from https://www.w3schools.com/howto/howto_js_slideshow.asp */
 
 .container {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
@@ -23,7 +23,7 @@
 
 .prev, .next{
 cursor: pointer;
-  position: fixed;
+  position: absolute;
   top: 30%;
   width: auto;
   color: black;
@@ -40,4 +40,16 @@ cursor: pointer;
 
 .prev {
   left: 25%;
+}
+
+.keyword-form {
+  position: absolute;
+  top: 70%;
+  left: 30%;
+}
+
+.gen-btn {
+  position: absolute;
+  top: 80%;
+  left: 45%;
 }
