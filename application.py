@@ -34,8 +34,10 @@ class Contest(db.Model):
     description_1 = db.Column(db.String(120))
     description_2 = db.Column(db.String(120))
     implied = db.Column(db.String(120))
-    
-    def __init__(self, image, men, women, animals, glasses, other, scenery, incongruity, description_0, description_1, description_2, implied):
+    keyword_0 = db.Column(db.String(120))
+    keyword_1 = db.Column(db.String(120))
+
+    def __init__(self, image, men, women, animals, glasses, other, scenery, incongruity, description_0, description_1, description_2, implied,keyword_0,keyword_1):
         self.image = image
         self.men = men
         self.women = women
@@ -48,6 +50,9 @@ class Contest(db.Model):
         self.description_1 = description_1
         self.description_2 = description_2
         self.implied = implied
+        self.keyword_0 = keyword_0
+        self.keyword_1 = keyword_1
 
+    # Query returns this 
     def __repr__(self):
         return '<Image %r>' % self.image

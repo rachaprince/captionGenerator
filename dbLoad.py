@@ -1,18 +1,18 @@
 from application import db
 from application import Contest
 import csv
+import codecs
 
-with open('./cartoonDescriptions.csv', 'r') as csvfile:
+with codecs.open('./cartoonDescriptions.csv', 'r') as csvfile:
   next(csvfile)
   for line in csvfile:
       args = [l.strip() for l in line.split(',')]
-      try:
-        encoded = [s.encode('utf8') for s in args]
-        print encoded
-        exit()
-        contest = Contest(*encoded)
-        db.session.add(contest)
-      except:
-        continue
+      encoded = [s.decode('utf8') for s in args]
+      encoded += [None, None]
+      contest = Contest(*encoded)
+      db.session.add(contest)
 
 db.session.commit()
+
+contests = Contest.query.all()
+print len(contests)
