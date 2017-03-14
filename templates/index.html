@@ -14,10 +14,10 @@
 <body>
     <div class=container>
         <img class="cartoonImage" src="http://clair.si.umich.edu/~radev/humor/NYKR_CaptionContest/{{ contest.image }}" alt={{ contest.image }} width="120" height="90" />
-        <a class="prev" href="/contests/{{contest.id - 1}}">&#10094;</a>
-        <a class="next" href="/contests/{{contest.id + 1}}">&#10095;</a>
+        <a class="prev"  href="{{ url_for('contests', contest_id=(contest.id - 1)) }}">&#10094;</a>
+        <a class="next" href="{{ url_for('contests', contest_id=(contest.id + 1)) }}">&#10095;</a>
         <br>
-        <form action="/contests/contest.id" method="post" class="keyword-form form-inline">
+        <form action=href="{{ url_for('contests', contest_id=(contest.id)) }}" method="post" class="keyword-form form-inline">
             <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_0" placeholder={{contest.keyword_0}}>
             <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_1" placeholder={{contest.keyword_1}}>
             <button type="submit" class="btn btn-primary">Update Keywords</button>
