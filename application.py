@@ -13,12 +13,7 @@ def index():
     if request.method == "GET":
         contests = db.session.query(Contest).all()
         # for now, set it to the third item until I delete the first two
-        return render_template('index.html',contest=contests[2] )
-    # else: # method == POST
-    #     print request.form.get("keyword_0")
-    #     print request.form.get("keyword_1")
-    #     contests = db.session.query(Contest).all()
-    #     return render_template('index.html',contest=contests[2] )
+        return render_template('index.html',contest=contests[2], captions = [] )
 
 @app.route('/contests/<contest_id>', methods=["GET", "POST"])
 def contests(contest_id):
@@ -30,7 +25,12 @@ def contests(contest_id):
         current_contest.keyword_0 = request.form.get("keyword_0")
         current_contest.keyword_1 = request.form.get("keyword_1")
         db.session.commit()
-        return render_template('index.html',contest=current_contest)
+        return render_template('index.html',contest=current_contest, captions = [])
+
+@app.route('/captions/<contest_id>', methods=["GET", "POST"])
+def captions(contest_id):
+    contests = db.session.query(Contest).all()
+    return render_template('index.html',contest=contests[int(contest_id)-1], captions = [['hello']])
 
 # Database Methods
 class Contest(db.Model):

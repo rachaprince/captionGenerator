@@ -52,3 +52,8 @@ cursor: pointer;
   top: 80%;
   left: 45%;
 }
+
+a, a:hover {
+  color: white;
+  text-decoration: none;
+}
