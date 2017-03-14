@@ -3,6 +3,8 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_sqlalchemy import SQLAlchemy
+from phrasedictionary import PhraseDictionary
+from captiongenerator import CaptionGenerator
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -29,8 +31,17 @@ def contests(contest_id):
 
 @app.route('/captions/<contest_id>', methods=["GET", "POST"])
 def captions(contest_id):
-    contests = db.session.query(Contest).all()
-    return render_template('index.html',contest=contests[int(contest_id)-1], captions = ['hello'])
+    phrase_dict = PhraseDictionary(['cliche_list.txt'])
+    phrase_dict.create_index()
+    caption_gen = CaptionGenerator(phrase_dict)
+
+    contest = Contest.query.filter_by(id=contest_id).first()
+
+    phrases = caption_gen.get_phrase(contest.keyword_0)
+    print phrases
+    captions = caption_gen.create_caption(phrases, contest.keyword_1)
+
+    return render_template('index.html',contest=contest, captions = captions)
 
 # Database Methods
 class Contest(db.Model):
