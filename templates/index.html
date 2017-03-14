@@ -18,12 +18,18 @@
         <a class="next" href="{{ url_for('contests', contest_id=(contest.id + 1)) }}">&#10095;</a>
         <br>
         <form action="{{ url_for('contests', contest_id=(contest.id)) }}" method="post" class="keyword-form form-inline">
-            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_0" placeholder={{contest.keyword_0}}>
-            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_1" placeholder={{contest.keyword_1}}>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_0" value={{contest.keyword_0}}>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" name="keyword_1" value={{contest.keyword_1}}>
             <button type="submit" class="btn btn-primary">Update Keywords</button>
         </form>
         <br>
         <button type="submit" class="gen-btn btn btn-primary"><a class="gen-link" href="{{ url_for('captions', contest_id=(contest.id)) }}"> Generate Captions</a></button>
+        <br>
+        <div class="captions">
+        {% for caption in captions %}
+            {{caption}}
+        {% endfor%}
+        </div>
     </div>
 
 </body>

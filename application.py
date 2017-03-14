@@ -30,7 +30,7 @@ def contests(contest_id):
 @app.route('/captions/<contest_id>', methods=["GET", "POST"])
 def captions(contest_id):
     contests = db.session.query(Contest).all()
-    return render_template('index.html',contest=contests[int(contest_id)-1], captions = [['hello']])
+    return render_template('index.html',contest=contests[int(contest_id)-1], captions = ['hello'])
 
 # Database Methods
 class Contest(db.Model):
