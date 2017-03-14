@@ -20,11 +20,17 @@ def index():
     #     contests = db.session.query(Contest).all()
     #     return render_template('index.html',contest=contests[2] )
 
-@app.route('/contests/<contest_id>')
-def contests(contest_id, methods=["GET", "POST"]):
+@app.route('/contests/<contest_id>', methods=["GET", "POST"])
+def contests(contest_id):
     contests = db.session.query(Contest).all()
     if request.method == "GET": # increase or decrease
         return render_template('index.html',contest=contests[int(contest_id)-1])
+    else: # method == POST
+        current_contest = Contest.query.filter_by(id=contest_id).first()
+        current_contest.keyword_0 = request.form.get("keyword_0")
+        current_contest.keyword_1 = request.form.get("keyword_1")
+        db.session.commit()
+        return render_template('index.html',contest=current_contest)
 
 # Database Methods
 class Contest(db.Model):
