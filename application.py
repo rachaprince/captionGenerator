@@ -12,12 +12,19 @@ db = SQLAlchemy(app)
 def index():
     if request.method == "GET":
         contests = db.session.query(Contest).all()
-        return render_template('index.html',contests=contests )
-    else: # method == POST
-        print request.form.get("keyword_0")
-        print request.form.get("keyword_1")
-        contests = db.session.query(Contest).all()
-        return render_template('index.html',contests=contests )
+        # for now, set it to the third item until I delete the first two
+        return render_template('index.html',contest=contests[2] )
+    # else: # method == POST
+    #     print request.form.get("keyword_0")
+    #     print request.form.get("keyword_1")
+    #     contests = db.session.query(Contest).all()
+    #     return render_template('index.html',contest=contests[2] )
+
+@app.route('/contests/<contest_id>')
+def contests(contest_id, methods=["GET", "POST"]):
+    contests = db.session.query(Contest).all()
+    if request.method == "GET": # increase or decrease
+        return render_template('index.html',contest=contests[int(contest_id)-1])
 
 # Database Methods
 class Contest(db.Model):
@@ -53,6 +60,6 @@ class Contest(db.Model):
         self.keyword_0 = keyword_0
         self.keyword_1 = keyword_1
 
-    # Query returns this 
+    # Query returns this
     def __repr__(self):
         return '<Image %r>' % self.image
