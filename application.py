@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
-# with file('captionGenerator.model', 'rb') as f:
-#      caption_gen = pickle.load(f)
+with file('captionGenerator.model', 'rb') as f:
+     caption_gen = pickle.load(f)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -36,17 +36,8 @@ def contests(contest_id):
 @app.route('/captions/<contest_id>', methods=["GET", "POST"])
 def captions(contest_id):
     contest = Contest.query.filter_by(id=contest_id).first()
-    # print contest.keyword_0
-    # phrases = caption_gen.get_phrase(contest.keyword_0)
-    # captions = caption_gen.create_caption(phrases, contest.keyword_1)
-    #print caption_gen.phrase_dict.phrases
-
-    with file('captionGenerator.model', 'rb') as f:
-        caption_gen = pickle.load(f)
-    phrases = caption_gen.get_phrase('business')
-    print phrases
-    captions = caption_gen.create_caption(phrases, 'subway')
-    print captions
+    phrases = caption_gen.get_phrase(contest.keyword_0)
+    captions = caption_gen.create_caption(phrases, contest.keyword_1)
 
     return render_template('index.html',contest=contest, captions = captions)
 
