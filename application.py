@@ -4,11 +4,15 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from flask_sqlalchemy import SQLAlchemy
 from phrasedictionary import PhraseDictionary
-from captiongenerator import CaptionGenerator
+from captionGenerator import CaptionGenerator
+import pickle
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+
+# with file('captionGenerator.model', 'rb') as f:
+#      caption_gen = pickle.load(f)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -31,15 +35,18 @@ def contests(contest_id):
 
 @app.route('/captions/<contest_id>', methods=["GET", "POST"])
 def captions(contest_id):
-    phrase_dict = PhraseDictionary(['cliche_list.txt'])
-    phrase_dict.create_index()
-    caption_gen = CaptionGenerator(phrase_dict)
-
     contest = Contest.query.filter_by(id=contest_id).first()
+    # print contest.keyword_0
+    # phrases = caption_gen.get_phrase(contest.keyword_0)
+    # captions = caption_gen.create_caption(phrases, contest.keyword_1)
+    #print caption_gen.phrase_dict.phrases
 
-    phrases = caption_gen.get_phrase(contest.keyword_0)
+    with file('captionGenerator.model', 'rb') as f:
+        caption_gen = pickle.load(f)
+    phrases = caption_gen.get_phrase('business')
     print phrases
-    captions = caption_gen.create_caption(phrases, contest.keyword_1)
+    captions = caption_gen.create_caption(phrases, 'subway')
+    print captions
 
     return render_template('index.html',contest=contest, captions = captions)
 

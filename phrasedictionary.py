@@ -4,17 +4,20 @@ from whoosh.qparser import QueryParser
 import pickle
 
 class PhraseDictionary(object):
-    def __init__(self, filenames):
+    def __init__(self, filenames, min_len, max_len):
         # files == list of .txt files, each line a phrase, separated by a new line
         # min == min length of sentence / not implemented
         # max == max length of sentence / not implemented
         # model == word2vec model / omitted for now
 
         # load the files into phrases
-        self.phrases = []
+        self.phrases = set()
         for filename in filenames:
             with open(filename) as f:
-                self.phrases = f.read().splitlines()
+                for line in f.read().splitlines():
+                    words = line.split(' ')
+                    if len(words) > min_len and len(words) < max_len:
+                        self.phrases.add(line)
 
         #self.model = model
         self.ix = None
@@ -22,7 +25,7 @@ class PhraseDictionary(object):
         # self.vector_dict = {}
         # self.phrases_vectors = []
 
-    # call this on the init? 
+    # call this on the init?
     def create_index(self):
         schema = Schema(index = ID(stored = True), content = TEXT(stored = True))
         self.ix = create_in("indexdir", schema)

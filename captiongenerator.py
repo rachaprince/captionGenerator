@@ -5,6 +5,7 @@ from phrasedictionary import PhraseDictionary
 import Tkinter as tk
 from PIL import ImageTk as itk
 from PIL import Image
+import pickle
 
 class CaptionGenerator(object):
 
@@ -48,5 +49,9 @@ class CaptionGenerator(object):
         w1 = tk.Label(root, image=cartoon).pack(side="top")
         w2 = tk.Label(root, text=caption_list).pack(side="bottom")
         root.mainloop()
-
         return
+
+    def save(self, f):
+        f = file(f, 'wb')
+        pickle.dump(self, f)
+        f.close()
