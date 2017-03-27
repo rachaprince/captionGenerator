@@ -38,7 +38,8 @@ class TestCaptionGenerator(unittest.TestCase):
         # Need to add assertion statements
 
     def test_display_caption(self):
-        phrase_dict = PhraseDictionary(['../phraseScrapers/proverbs_0.txt', '../phraseScrapers/phrases.txt'],3,10)
+        model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+        phrase_dict = PhraseDictionary(['../phraseScrapers/proverbs_0.txt', '../phraseScrapers/phrases.txt'],3,10, model)
         phrase_dict.create_index()
         caption_gen = CaptionGenerator(phrase_dict)
 
@@ -49,7 +50,8 @@ class TestCaptionGenerator(unittest.TestCase):
 
     def test_save(self):
         # saving the latest model for TestCaptionGenerator
-        phrase_dict = PhraseDictionary(['../phraseScrapers/cliches.txt', '../phraseScrapers/phrases.txt', '../phraseScrapers/proverbs_0.txt', '../phraseScrapers/quotes.txt', '../phraseScrapers/truisms_1.txt', '../phraseScrapers/truisms.txt'],3,30)
+        model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+        phrase_dict = PhraseDictionary(['../phraseScrapers/cliches.txt', '../phraseScrapers/phrases.txt', '../phraseScrapers/proverbs_0.txt', '../phraseScrapers/quotes.txt', '../phraseScrapers/truisms_1.txt', '../phraseScrapers/truisms.txt'],3,30, model)
         phrase_dict.create_index()
         caption_gen = CaptionGenerator(phrase_dict)
         caption_gen.save('./captionGenerator.model')

@@ -38,6 +38,8 @@ def captions(contest_id):
     contest = Contest.query.filter_by(id=contest_id).first()
     phrases = caption_gen.get_phrase(contest.keyword_0)
     captions = caption_gen.create_caption(phrases, contest.keyword_1)
+    phrases_2 = caption_gen.get_phrase(contest.keyword_1)
+    captions += caption_gen.create_caption(phrases_2, contest.keyword_0)
 
     return render_template('index.html',contest=contest, captions = captions)
 
