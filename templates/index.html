@@ -31,10 +31,11 @@
             </div>
             <div class="right col-md-6">
                 <div class="captions">
-                {% for caption in captions %}
-                    {{caption}}
-                    <br>
-                {% endfor%}
+                    <ul>
+                        {% for caption in captions %}
+                            <li> {{caption}} </li>
+                        {% endfor%}
+                    </ul>
                 </div>
             </div>
         </div>

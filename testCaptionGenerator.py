@@ -3,6 +3,8 @@ from phrasedictionary import PhraseDictionary
 from captionGenerator import CaptionGenerator
 import pickle
 
+MODEL = 'GoogleNews-vectors-negative300.bin'
+
 class TestCaptionGenerator(unittest.TestCase):
 
     def test_init(self):
@@ -31,15 +33,13 @@ class TestCaptionGenerator(unittest.TestCase):
         caption_gen = CaptionGenerator(phrase_dict)
 
         phrases = caption_gen.get_phrase('doctor')
-        print phrases
         captions = caption_gen.create_caption(phrases, 'mouse')
-        print captions
 
         # Need to add assertion statements
 
     def test_display_caption(self):
-        model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
-        phrase_dict = PhraseDictionary(['../phraseScrapers/proverbs_0.txt', '../phraseScrapers/phrases.txt'],3,10, model)
+        #model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+        phrase_dict = PhraseDictionary(['../phraseScrapers/proverbs_0.txt', '../phraseScrapers/phrases.txt'],3,10, MODEL)
         phrase_dict.create_index()
         caption_gen = CaptionGenerator(phrase_dict)
 
@@ -50,19 +50,17 @@ class TestCaptionGenerator(unittest.TestCase):
 
     def test_save(self):
         # saving the latest model for TestCaptionGenerator
-        model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
-        phrase_dict = PhraseDictionary(['../phraseScrapers/cliches.txt', '../phraseScrapers/phrases.txt', '../phraseScrapers/proverbs_0.txt', '../phraseScrapers/quotes.txt', '../phraseScrapers/truisms_1.txt', '../phraseScrapers/truisms.txt'],3,30, model)
+        #model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
+        phrase_dict = PhraseDictionary(['../phraseScrapers/cliches.txt', '../phraseScrapers/phrases.txt', '../phraseScrapers/proverbs_0.txt', '../phraseScrapers/quotes.txt', '../phraseScrapers/truisms_1.txt', '../phraseScrapers/truisms.txt'],3,30, MODEL)
         phrase_dict.create_index()
         caption_gen = CaptionGenerator(phrase_dict)
         caption_gen.save('./captionGenerator.model')
 
-    def test_load(self):
-        with file('captionGenerator.model', 'rb') as f:
-            caption_gen = pickle.load(f)
-        phrases = caption_gen.get_phrase('business')
-        print phrases
-        captions = caption_gen.create_caption(phrases, 'subway')
-        print captions
+    # def test_load(self):
+    #     with file('captionGenerator.model', 'rb') as f:
+    #         caption_gen = pickle.load(f)
+    #     phrases = caption_gen.get_phrase('business')
+    #     captions = caption_gen.create_caption(phrases, 'subway')
 
 
 
