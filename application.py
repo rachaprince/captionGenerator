@@ -8,7 +8,7 @@ from captionGenerator import CaptionGenerator
 import pickle
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/database.db'
 db = SQLAlchemy(app)
 
 with file('captionGenerator.model', 'rb') as f:
