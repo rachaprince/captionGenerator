@@ -26,6 +26,15 @@
   margin: 0;
 }
 
+.captionCover{
+  position: absolute;
+  background-color: white;
+  min-height: 40px;
+  min-width: 300px;
+  top: 53%;
+  left: 25%;
+}
+
 .prev, .next, .prev:hover, .next:hover{
 cursor: pointer;
   position: absolute;
